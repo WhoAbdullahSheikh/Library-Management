@@ -1,37 +1,34 @@
-package library;
-
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAO 
-{
-    private Connection connection;
+public class UserDAO {
+    private Connection connection; // Initialize your database connection
 
-    public UserDAO() {
-        connection = DatabaseConnection.getConnection();
-    }
-
-    public User getUserByUsernameAndPassword(String username, String password) { User user = null;
-        try {
-            String query = "SELECT * FROM login WHERE username = ? AND password = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                user = new User();
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
- 
-            }
+    public boolean createUser(String username, String password) {
+        String query = "INSERT INTO Users (username, password) VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            statement.setString(2, password);
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0; // If a row is affected, user creation is successful
         } catch (SQLException e) {
             e.printStackTrace();
+            return false; // Error occurred during the database query
         }
-        return user;
     }
-
+    
+    public boolean addUser(String username, String password) {
+    String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1, username);
+        statement.setString(2, password);
+        int rowsAffected = statement.executeUpdate();
+        return rowsAffected > 0; // If one or more rows were affected, user addition is successful
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false; // Error occurred during the database operation
+    }
+}
+    
 }

@@ -12,7 +12,7 @@ public class DatabaseConnection {
     public static void insertCredentials(String name, String password) {
         try {
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            String query = "INSERT INTO login (username, password) VALUES (?, ?)";
+            String query = "INSERT INTO Users (username, password) VALUES (?, ?)";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, name);
             statement.setString(2, password);
