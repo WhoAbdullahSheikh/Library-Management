@@ -24,10 +24,11 @@ public class UserDAO {
     }
 
     public boolean createUser(String username, String password) {
-        String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+        String query = "INSERT INTO users (username, password, UserID, Admin) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             statement.setString(2, password);
+           
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0; // If a row is affected, user creation is successful
         } catch (SQLException e) {
