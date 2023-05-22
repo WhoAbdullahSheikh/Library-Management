@@ -48,6 +48,11 @@ public class dashboard extends javax.swing.JFrame {
         });
 
         jButton3.setText("View Users");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Add Book");
 
@@ -150,6 +155,14 @@ public class dashboard extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        UserTable UserTable = new UserTable();
+        UserTable.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
