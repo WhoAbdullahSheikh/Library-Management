@@ -2,42 +2,55 @@ package library;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.DriverManager;
 
 public class UserDAO {
 
-    private Connection connection; // Initialize your database connection
+    private Connection connection;
 
     public UserDAO() {
         try {
-            // Replace the databaseUrl, username, and password with your MySQL configuration
-            String URL = "jdbc:mysql://localhost:3306/library"; // Replace with your database URL
-            String USERNAME = "root"; // Replace with your database username
-            String PASSWORD = ""; // Replace with your database password
+            String URL = "jdbc:mysql://localhost:3306/library";
+            String USERNAME = "root";
+            String PASSWORD = "";
 
-            // Establish the database connection
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public boolean createUser(String username, String password,String userId,String adminChoice) {
+    public boolean createUser(String username, String password, String userId, String adminChoice) {
         String query = "INSERT INTO users (username, password, userId, admin) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             statement.setString(2, password);
-            statement.setString(3,userId);
-            statement.setString(4,adminChoice);
-            
-           
+            statement.setString(3, userId);
+            statement.setString(4, adminChoice);
+
             int rowsAffected = statement.executeUpdate();
-            return rowsAffected > 0; // If a row is affected, user creation is successful
+            return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false; // Error occurred during the database query
+            return false;
         }
     }
 
+    public boolean validateUser(String username, String password) {
+        String query = "SELECT username, password FROM users WHERE username = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    String dbPassword = rs.getString("password");
+                    return password.equals(dbPassword);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

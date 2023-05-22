@@ -16,8 +16,12 @@ public class login extends javax.swing.JFrame {
     /**
      * Creates new form login
      */
+    private UserDAO userDAO;
+
     public login() {
         initComponents();
+        userDAO = new UserDAO();
+       
     }
 
     /**
@@ -118,27 +122,21 @@ public class login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        String username = jTextField1.getText();
         String password = new String(jPasswordField1.getPassword());
-        String dbUsername = "Abdullah";
-        String dbPassword = "123";
-        // Print the name and password (you can modify this part to store in the database)
-        if (username.equals(dbUsername) && password.equals(dbPassword)) {
-        System.out.println("Login successful");
-        // Clear the text fields after successful login
-        
-        jTextField1.setText("");
-        jPasswordField1.setText("");
+       if (userDAO.validateUser(username, password)) {
+            System.out.println("Login successful");
+            // Clear the text fields after successful login
+            jTextField1.setText("");
+            jPasswordField1.setText("");
 
-        dashboard dashboard = new dashboard();
-        dashboard.setVisible(true);
-        this.dispose();
-    } else {
-        System.out.println("Invalid username or password");
-        JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
-        jTextField1.setText("");
-        jPasswordField1.setText("");
-
-    }
-        ;
+            dashboard dashboard = new dashboard();
+            dashboard.setVisible(true);
+            this.dispose();
+        } else {
+            System.out.println("Invalid username or password");
+            JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", JOptionPane.ERROR_MESSAGE);
+            jTextField1.setText("");
+            jPasswordField1.setText("");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
