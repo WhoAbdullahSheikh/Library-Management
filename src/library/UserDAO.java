@@ -24,7 +24,7 @@ public class UserDAO {
 
     public boolean createUser(String username, String password, String userId, String adminChoice) {
         String query = "INSERT INTO users (username, password, userId, admin) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try ( PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
             statement.setString(2, password);
             statement.setString(3, userId);
@@ -36,13 +36,14 @@ public class UserDAO {
             e.printStackTrace();
             return false;
         }
+
     }
 
     public boolean validateUser(String username, String password) {
         String query = "SELECT username, password FROM users WHERE username = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try ( PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, username);
-            try (ResultSet rs = statement.executeQuery()) {
+            try ( ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
                     String dbPassword = rs.getString("password");
                     return password.equals(dbPassword);
@@ -53,4 +54,16 @@ public class UserDAO {
         }
         return false;
     }
+
+    public boolean resetDatabase() {
+        String query = "DELETE FROM Users";
+        try ( PreparedStatement statement = connection.prepareStatement(query)) {
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0; // If rows are affected, data deletion is successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Error occurred during the database query
+        }
+    }
+
 }

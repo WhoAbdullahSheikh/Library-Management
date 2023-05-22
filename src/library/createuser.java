@@ -94,6 +94,12 @@ public class createuser extends javax.swing.JFrame {
 
         jLabel6.setText("Admin:");
 
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -185,6 +191,7 @@ public class createuser extends javax.swing.JFrame {
             jPasswordField1.setText("");
             jPasswordField2.setText("");
             jTextField3.setText("");
+            jTextField4.setText("");
         } else {
             System.out.println("Error creating user");
         }
@@ -198,6 +205,10 @@ public class createuser extends javax.swing.JFrame {
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

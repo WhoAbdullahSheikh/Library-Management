@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package library;
+import library.UserDAO;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,6 +18,7 @@ public class dashboard extends javax.swing.JFrame {
      */
     public dashboard() {
         initComponents();
+
     }
 
     /**
@@ -73,6 +77,11 @@ public class dashboard extends javax.swing.JFrame {
         });
 
         jButton8.setText("Create/Reset");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Back to Login");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +155,7 @@ public class dashboard extends javax.swing.JFrame {
         createuser createuser = new createuser();
         createuser.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -161,8 +170,24 @@ public class dashboard extends javax.swing.JFrame {
         UserTable UserTable = new UserTable();
         UserTable.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+         UserDAO userDAO = new UserDAO();
+    
+    // Reset the database
+    boolean success = userDAO.resetDatabase();
+    
+    if (success) {
+        // Show a success message
+        JOptionPane.showMessageDialog(this, "Database reset successful.", "Success", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        // Show an error message
+        JOptionPane.showMessageDialog(this, "Database reset failed.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
