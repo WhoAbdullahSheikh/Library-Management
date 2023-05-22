@@ -165,19 +165,19 @@ public class createuser extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code he:
-         String username = jTextField1.getText();
+        String username = jTextField1.getText();
         String password = new String(jPasswordField1.getPassword());
         String confirmPassword = new String(jPasswordField2.getPassword());
         String userId = jTextField3.getText();
         String adminChoice = jTextField4.getText();
-        
+
         if (!password.equals(confirmPassword)) {
             System.out.println("Passwords do not match");
             return;
         }
 
         UserDAO userDAO = new UserDAO();
-        boolean userCreated = userDAO.createUser(username, password);
+        boolean userCreated = userDAO.createUser(username, password, userId, adminChoice);
         if (userCreated) {
             System.out.println("User created successfully");
             // Clear the text fields after creating the user
@@ -185,10 +185,10 @@ public class createuser extends javax.swing.JFrame {
             jPasswordField1.setText("");
             jPasswordField2.setText("");
             jTextField3.setText("");
-            jTextField4.setText("");
         } else {
             System.out.println("Error creating user");
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
