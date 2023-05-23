@@ -1,5 +1,6 @@
 package library;
 
+import java.awt.print.Book;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,6 +65,28 @@ public class UserDAO {
             e.printStackTrace();
             return false; // Error occurred during the database query
         }
+    }
+    
+    private boolean addBookToDatabase(Book book) {
+    // Modify the database connection details according to your configuration
+    String url = "jdbc:mysql://localhost:3306/library";
+    String username = "root";
+    String password = "";
+
+    try (Connection conn = DriverManager.getConnection(url, username, password)) {
+        String sql = "INSERT INTO Books (book_id, book_name, genre, price) VALUES (?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, book.getBookID());
+        stmt.setString(2, book.getBookName());
+        stmt.setString(3, book.getGenre());
+        stmt.setString(4, book.getPrice());
+
+        int rowsAffected = stmt.executeUpdate();
+        return rowsAffected > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
     }
 
 }
