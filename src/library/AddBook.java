@@ -4,7 +4,10 @@
  */
 package library;
 
-import java.awt.print.Book;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -113,33 +116,61 @@ public class AddBook extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
+    private boolean addBookToDatabase(Book book) {
+        String url = "jdbc:mysql://localhost:3306/library";
+        String username = "root";
+        String password = "";
+
+        try ( Connection conn = DriverManager.getConnection(url, username, password)) {
+            String sql = "INSERT INTO Books (BID, BName, Genre, Price) VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, book.getBookID());
+            stmt.setString(2, book.getBookName());
+            stmt.setString(3, book.getGenre());
+            stmt.setString(4, book.getPrice());
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         int bookID;
-    try {
-        bookID = Integer.parseInt(jTextField1.getText());
-    } catch (NumberFormatException e) {
-        // Handle the case when the input is not a valid integer
-        JOptionPane.showMessageDialog(this, "Invalid Book ID", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    String bookName = jTextField2.getText();
-    String genre = jTextField3.getText();
-    String price = jTextField4.getText();
+        int bookID;
+        try {
+            bookID = Integer.parseInt(jTextField1.getText());
+        } catch (NumberFormatException e) {
+            // Handle the case when the input is not a valid integer
+            JOptionPane.showMessageDialog(this, "Invalid Book ID", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String bookName = jTextField2.getText();
+        String genre = jTextField3.getText();
+        String price = jTextField4.getText();
 
-    // Create a Book object with the input values
-    Book book = new Book(bookID, bookName, genre, price);
+        // Create a Book object with the input values
+     
+      
+        Book book = new Book(bookID, bookName, genre, price);
 
-    // Add the book to the database
-    boolean success = addBookToDatabase(book);
+        // Add the book to the database
+        boolean success = addBookToDatabase(book);
 
-    // Display a message based on the success of adding the book
-    if (success) {
-        JOptionPane.showMessageDialog(this, "Book added successfully!");
-    } else {
-        JOptionPane.showMessageDialog(this, "Failed to add book to the database.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        // Display a message based on the success of adding the book
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Book added successfully!");
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to add book to the database.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -193,7 +224,6 @@ public class AddBook extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 
-    private boolean addBookToDatabase(Book book) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
+   
 }
