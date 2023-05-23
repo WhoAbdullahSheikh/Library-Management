@@ -1,10 +1,14 @@
 package library;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -15,6 +19,7 @@ public class UserTable extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
     private Connection connection;
+    
 
     public UserTable() {
         initComponents();
@@ -22,7 +27,10 @@ public class UserTable extends JFrame {
         populateTable();
     }
 
+    
+
     private void initComponents() {
+        
         tableModel = new DefaultTableModel();
         tableModel.addColumn("ID");
         tableModel.addColumn("Username");
@@ -53,8 +61,7 @@ public class UserTable extends JFrame {
 
     private void populateTable() {
         String query = "SELECT * FROM users";
-        try (PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+        try ( PreparedStatement statement = connection.prepareStatement(query);  ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 String userId = resultSet.getString("userId");
