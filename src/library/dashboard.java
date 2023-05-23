@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package library;
-import library.UserDAO;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
  *
@@ -43,6 +45,11 @@ public class dashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("View Books");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Add User");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -201,6 +208,36 @@ public class dashboard extends javax.swing.JFrame {
         AddBook.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        BookDAO bookDAO = new BookDAO();
+    
+    // Get the list of books from the database
+    List<Book> bookList = bookDAO.getAllBooks();
+    
+    // Create a table model with the column names
+    DefaultTableModel tableModel = new DefaultTableModel();
+    tableModel.addColumn("ID");
+    tableModel.addColumn("Name");
+    tableModel.addColumn("Genre");
+    tableModel.addColumn("Price");
+    
+    // Populate the table model with book data
+    for (Book book : bookList) {
+        tableModel.addRow(new Object[]{book.getBookID(), book.getBookName(), book.getGenre(), book.getPrice()});
+    }
+    
+    // Create a new JTable with the table model
+    JTable bookTable = new JTable(tableModel);
+    
+    // Display the table in a scroll pane
+    JScrollPane scrollPane = new JScrollPane(bookTable);
+    
+    // Show the table in a dialog box
+    JOptionPane.showMessageDialog(this, scrollPane, "Book List", JOptionPane.PLAIN_MESSAGE);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
