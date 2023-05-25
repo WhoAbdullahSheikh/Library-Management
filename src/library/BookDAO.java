@@ -103,4 +103,42 @@ public class BookDAO {
         return book;
     }
 
+    public boolean saveBook(Book book) {
+        // Database connection and save logic here
+        // Replace this code with your actual implementation
+
+        try {
+            // Open a connection to the database
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library", "root", "");
+
+            // Prepare the SQL statement
+            String sql = "INSERT INTO issuebooks (BID, BName, genre, price) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            // Set the parameter values for the SQL statement
+            statement.setInt(1, book.getBookID());
+            statement.setString(2, book.getBookName());
+            statement.setString(3, book.getGenre());
+            statement.setString(4, book.getPrice());
+            
+
+            // Execute the SQL statement
+            int rowsInserted = statement.executeUpdate();
+
+            // Close the statement and connection
+            statement.close();
+            connection.close();
+
+            // Check if the book was successfully saved
+            if (rowsInserted > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

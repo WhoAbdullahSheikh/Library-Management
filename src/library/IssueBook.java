@@ -14,7 +14,7 @@ public class IssueBook extends javax.swing.JFrame {
      * Creates new form IssueBook
      */
     private BookDAO BookDAO;
-    
+
     public IssueBook() {
         initComponents();
         BookDAO = new BookDAO();
@@ -146,14 +146,33 @@ public class IssueBook extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
+
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int bookID = Integer.parseInt(jTextField1.getText());
+        String bookName = jTextField2.getText();
+        String genre = jTextField3.getText();
+        String price = jTextField4.getText();
+        String issueDate = jTextField5.getText();
+        String bookholderName = jTextField6.getText();
+
+        // Create a new Book object with the input values
+        Book book = new Book(bookID, bookName, genre, price);
+
+        // Save the book in the database
+        boolean success = BookDAO.saveBook(book);
+
+        if (success) {
+            // Book saved successfully
+            // You can display a success message or perform any other action here
+        } else {
+            // Book not saved
+            // You can display an error message or perform any other action here
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -161,8 +180,8 @@ public class IssueBook extends javax.swing.JFrame {
 
         // Retrieve book details from the database
         ;
-       int bookID = Integer.parseInt(jTextField1.getText());
-       Book book = BookDAO.getBookByID(bookID);
+        int bookID = Integer.parseInt(jTextField1.getText());
+        Book book = BookDAO.getBookByID(bookID);
 
         if (book != null) {
             // Populate the fields with the retrieved book details

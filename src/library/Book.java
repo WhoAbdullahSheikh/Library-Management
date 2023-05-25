@@ -5,12 +5,15 @@ public class Book {
     private String bookName;
     private String genre;
     private String price;
+    private String issueDate;
+    private String bookholderName;
 
     public Book(int bookID,String bookName, String genre, String price) {
         this.bookID = bookID;
         this.bookName = bookName;
         this.genre = genre;
         this.price = price;
+        
     }
 
     public int getBookID() {
@@ -44,4 +47,7 @@ public class Book {
     public void setPrice(String price) {
         this.price = price;
     }
+   
+
+    
 }

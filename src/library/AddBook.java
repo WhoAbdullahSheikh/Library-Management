@@ -154,7 +154,7 @@ public class AddBook extends javax.swing.JFrame {
         // Create a Book object with the input values
      
       
-        Book book = new Book(bookID, bookName, genre, price);
+        Book book = new Book(bookID,bookName, genre, price);
 
         // Add the book to the database
         boolean success = addBookToDatabase(book);
